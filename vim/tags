@@ -1,0 +1,32 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+<leader><space>	/Users/Jason/.dotfiles/vim/vimrc	/^nnoremap <leader><space> :nohlsearch<CR>  " turn off search highlight$/;"	m	language:Vim
+<leader>b	/Users/Jason/.dotfiles/vim/vimrc	/^nmap <silent> <leader>b :TagbarToggle<CR>$/;"	m	language:Vim
+<space>	/Users/Jason/.dotfiles/vim/vimrc	/^nnoremap <space> za     " space open\/closes folds$/;"	m	language:Vim
+configgroup	/Users/Jason/.dotfiles/vim/vimrc	/^augroup configgroup$/;"	a	language:Vim
+g:acp_enableAtStartup	/Users/Jason/.dotfiles/vim/vimrc	/^let g:acp_enableAtStartup = 0$/;"	v	language:Vim
+g:airline_powerline_fonts	/Users/Jason/.dotfiles/vim/vimrc	/^let g:airline_powerline_fonts = 1$/;"	v	language:Vim
+g:airline_theme	/Users/Jason/.dotfiles/vim/vimrc	/^let g:airline_theme = "gruvbox"$/;"	v	language:Vim
+g:ctrlp_match_window	/Users/Jason/.dotfiles/vim/vimrc	/^let g:ctrlp_match_window = 'bottom,order:ttb'$/;"	v	language:Vim
+g:ctrlp_switch_buffer	/Users/Jason/.dotfiles/vim/vimrc	/^let g:ctrlp_switch_buffer = 0$/;"	v	language:Vim
+g:ctrlp_user_command	/Users/Jason/.dotfiles/vim/vimrc	/^let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'$/;"	v	language:Vim
+g:ctrlp_working_path_mode	/Users/Jason/.dotfiles/vim/vimrc	/^let g:ctrlp_working_path_mode = 0$/;"	v	language:Vim
+g:easytags_async	/Users/Jason/.dotfiles/vim/vimrc	/^let g:easytags_async = 1$/;"	v	language:Vim
+g:easytags_dynamic_files	/Users/Jason/.dotfiles/vim/vimrc	/^let g:easytags_dynamic_files = 2$/;"	v	language:Vim
+g:easytags_events	/Users/Jason/.dotfiles/vim/vimrc	/^let g:easytags_events = ['BufReadPost', 'BufWritePost']$/;"	v	language:Vim
+g:easytags_resolve_links	/Users/Jason/.dotfiles/vim/vimrc	/^let g:easytags_resolve_links = 1$/;"	v	language:Vim
+g:easytags_suppress_ctags_warning	/Users/Jason/.dotfiles/vim/vimrc	/^let g:easytags_suppress_ctags_warning = 1$/;"	v	language:Vim
+g:neocomplete#enable_at_startup	/Users/Jason/.dotfiles/vim/vimrc	/^let g:neocomplete#enable_at_startup = 1$/;"	v	language:Vim
+g:neocomplete#enable_camel_case	/Users/Jason/.dotfiles/vim/vimrc	/^let g:neocomplete#enable_camel_case = 1$/;"	v	language:Vim
+g:neocomplete#enable_smart_case	/Users/Jason/.dotfiles/vim/vimrc	/^let g:neocomplete#enable_smart_case = 1$/;"	v	language:Vim
+g:NERDTreeMouseMode	/Users/Jason/.dotfiles/vim/vimrc	/^let g:NERDTreeMouseMode=3$/;"	v	language:Vim
+g:nerdtree_tabs_open_on_console_startup	/Users/Jason/.dotfiles/vim/vimrc	/^let g:nerdtree_tabs_open_on_console_startup=1$/;"	v	language:Vim
+g:syntastic_auto_jump	/Users/Jason/.dotfiles/vim/vimrc	/^let g:syntastic_auto_jump=0$/;"	v	language:Vim
+g:syntastic_auto_loc_list	/Users/Jason/.dotfiles/vim/vimrc	/^let g:syntastic_auto_loc_list=1$/;"	v	language:Vim
+g:syntastic_enable_signs	/Users/Jason/.dotfiles/vim/vimrc	/^let g:syntastic_enable_signs=1$/;"	v	language:Vim
+g:syntastic_error_symbol	/Users/Jason/.dotfiles/vim/vimrc	/^let g:syntastic_error_symbol = '✘'$/;"	v	language:Vim
+g:syntastic_quiet_messages	/Users/Jason/.dotfiles/vim/vimrc	/^let g:syntastic_quiet_messages = {'level': 'warnings'}$/;"	v	language:Vim
+g:syntastic_warning_symbol	/Users/Jason/.dotfiles/vim/vimrc	/^let g:syntastic_warning_symbol = "▲"$/;"	v	language:Vim
+j	/Users/Jason/.dotfiles/vim/vimrc	/^nnoremap j gj$/;"	m	language:Vim
+k	/Users/Jason/.dotfiles/vim/vimrc	/^nnoremap k gk$/;"	m	language:Vim
+mapleader	/Users/Jason/.dotfiles/vim/vimrc	/^let mapleader = ","$/;"	v	language:Vim
+mySyntastic	/Users/Jason/.dotfiles/vim/vimrc	/^augroup mySyntastic$/;"	a	language:Vim

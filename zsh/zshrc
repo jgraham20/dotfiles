@@ -21,6 +21,18 @@ eval "$(pyenv init -)"
 export PATH="$HOME/.local/bin:$PATH"
 
 
+# Customize to your needs...
+for config_file ($HOME/.yadr/zsh/*.zsh) source $config_file
+autoload -Uz promptinit
+promptinit
+prompt paradox
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+export PATH="$HOME/.local/bin:$PATH"
+alias emacs=" emacsclient -nw"
+
+
 dark0_hard="#1D2021"
 dark0="#282828"
 dark0_soft="#32302F"

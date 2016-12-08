@@ -17,7 +17,7 @@ do
 done
 
 # Symlink all zsh files.
-ln -s -f -v `pwd`/zsh/zshrc ~/.zshrc
+#ln -s -f -v `pwd`/zsh/zshrc ~/.zshrc
 
 # Symlink the vim files.
 ln -s -f -v `pwd`/vim/vimrc ~/.vimrc
@@ -27,6 +27,7 @@ ln -s -f -v `pwd`/vim ~/.vim
 # using the provided tmux.conf inside the folder.
 ln -s -f -v `pwd`/tmux ~/.tmux
 ln -s -f -v `pwd`/tmux/tmux-powerlinerc ~/.tmux-powerlinerc
+ln -s -f -v `pwd`/tmux/tmux.conf ~/.tmux.conf
 
 # All the misc rc files
 ln -s -f -v `pwd`/misc_rc_files/pylintrc ~/.pylintrc
