@@ -37,6 +37,7 @@ Bundle "sjl/gundo.vim"
 Bundle "vim-scripts/AutoTag.git"
 Plugin 'xolox/vim-easytags'
 Plugin 'majutsushi/tagbar'
+Plugin 'bling/vim-bufferline'
 
 " =========== Vundle Search ================
 Bundle "justinmk/vim-sneak"
@@ -187,9 +188,7 @@ let g:easytags_suppress_ctags_warning = 1
 " Open/close tagbar with \b
 nmap <silent> <leader>b :TagbarToggle<CR>
 " Uncomment to open tagbar automatically whenever possible
-"autocmd BufEnter * nested :call tagbar#autoopen(0)
-
-
+autocmd BufEnter * nested :call tagbar#autoopen(0)
 
 " ================= Backups ===========================
 set backup
