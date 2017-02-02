@@ -34,7 +34,7 @@ Bundle "tpope/vim-fugitive"
 Bundle "christoomey/vim-tmux-navigator"
 Bundle "MarcWeber/vim-addon-mw-utils.git"
 Bundle "sjl/gundo.vim"
-Bundle "vim-scripts/AutoTag.git"
+"Bundle "vim-scripts/AutoTag.git"
 Plugin 'xolox/vim-easytags'
 Plugin 'majutsushi/tagbar'
 Plugin 'bling/vim-bufferline'
