@@ -28,22 +28,24 @@
    dotspacemacs-configuration-layer-path '()
    dotspacemacs-configuration-layers
    '(
+     auto-completion
      better-defaults
      (colors :variables
              colors-enable-nyan-cat-progress-bar t)
      deft
      emacs-lisp
-     ess
+     ;;ess
      (git :variables
           git-gutter-use-fringe t)
      github
      go
      gtags
-     ;;helm
+     helm
      html
      imenu-list
      (ibuffer :variables
               ibuffer-group-buffers-by nil)
+     ;;jedi
      (python :variables
              python-test-runner 'pytest)
      markdown
@@ -56,8 +58,10 @@
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
+     smex
      themes-megapack
      tmux
+     ;;ycmd
      version-control
      )
 
@@ -67,6 +71,8 @@
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(avy
                                       crosshairs
+                                      company
+                                      company-anaconda
                                       defproject
                                       editorconfig
                                       helm-flycheck
@@ -320,16 +326,9 @@
   ;; explicitly specified that a variable should be set before a package is loaded,
   ;; you should place your code here."
   (add-to-list 'load-path "/usr/local/Cellar/mu/0.9.18/share/emacs/site-lisp/mu/mu4e")
-  ;;(server-start)
-  ;;(setq neo-theme 'icons)
-  ;;(setq doom-neotree-enable-file-icons t)
-  ;;(setq perspective-enable-persp-projectile nil)
   (setq window-combination-resize nil)
   (toggle-crosshairs-when-idle 1)
 
-  (setq-default dotspacemacs-configuration-layers
-                '((mu4e :variables
-                        mu4e-installation-path "/usr/local/Cellar/mu/0.9.18/share/emacs/site-lisp/mu/mu4e/")))
   (setq speedbar-frame-parameters
       '((minibuffer)
 	(width . 20)
@@ -367,6 +366,8 @@
   ;;"Automatically set pyenv version from \".python-version\".
   ;; Possible values are `on-visit', `on-project-switch' or `nil'.")
   (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+
   (eval-after-load "company"
     '(add-to-list 'company-backends 'company-anaconda))
   (setq ein:use-smartrep t)
@@ -384,43 +385,34 @@
   ;;(elpy-enable)
 
   ;; Org Mode
-  (with-eval-after-load 'org (setq org-agenda-files
-                                   '("/Users/Jason/Dropbox/Notes/")))
-
-  ;;(setq org-mobile-directory '("/Users/Jason/Dropbox/Notes/Mobile/"))
-
+  (with-eval-after-load 'org (setq org-agenda-files '("/Users/Jason/Dropbox/Notes/org")))
+  ;; mobileorg settings
+  (setq org-directory "~/Dropbox/org")
+  (setq org-mobile-inbox-for-pull "~/Dropbox/org/inbox.org")
+  (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+  (setq org-mobile-files '("~/Dropbox/org"))
+  
+  ;;(setq ycmd-server-command '("python" "/Users/Jason/.vim/bundle/YouCompleteMe/third_party/ycmd"))
+  ;;(setq ycmd-force-semantic-completion t)
   (with-eval-after-load 'org-agenda
     (require 'org-projectile)
     (push (org-projectile:todo-files) org-agenda-files))
 
   ;; Deft stuff
-  ;;(setq deft-extensions '("org"))
-  ;;(setq deft-default-extension "org")
-  ;;(setq deft-text-mode 'org-mode)
-  ;;(setq deft-use-filename-as-title t)
-  ;;(setq deft-use-filter-string-for-filename t)
-  ;;(setq deft-auto-save-interval 0)
+  (setq deft-extensions '("org"))
+  (setq deft-default-extension "org")
+  (setq deft-text-mode 'org-mode)
+  (setq deft-use-filename-as-title t)
+  (setq deft-use-filter-string-for-filename t)
+  (setq deft-auto-save-interval 0)
   ;;key to launch deft
-  ;;(global-set-key (kbd "C-c d") 'deft)
+  (global-set-key (kbd "C-c d") 'deft)
 )
 (defun dotspacemacs/emacs-custom-settings ()
-  ;; Emacs custom settings. This is an auto-generated function,
-  ;; do not modify its content directly, useEmacs customize menu instead.
-  ;; This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (jedi-core python-environment epc ctable concurrent deferred zonokai-theme zenburn-theme zen-and-art-theme yapfify xterm-color ws-butler winum which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package unfill underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme toc-org tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacemacs-theme spaceline spacegray-theme sourcerer-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smeargle slim-mode shell-pop seti-theme scss-mode sass-mode reverse-theme reveal-in-osx-finder restart-emacs ranger rainbow-mode rainbow-identifiers rainbow-delimiters railscasts-theme quelpa pyvenv pytest pyenv-mode py-isort purple-haze-theme pug-mode professional-theme popwin planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme perspective persp-mode pcre2el pbcopy pastels-on-dark-theme paradox osx-trash osx-dictionary orgit organic-green-theme org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme neotree naquadah-theme mwim mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme material-theme markdown-toc majapahit-theme magit-gitflow magit-gh-pulls macrostep lush-theme lorem-ipsum live-py-mode linum-relative link-hint light-soap-theme less-css-mode launchctl jbeans-theme jazz-theme ir-black-theme inkpot-theme info+ indent-guide ido-vertical-mode ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt heroku-theme hemisu-theme help-fns+ helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate golden-ratio go-guru go-eldoc gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md gandalf-theme flx-ido flatui-theme flatland-theme firebelly-theme fill-column-indicator farmhouse-theme fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu espresso-theme eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav ein editorconfig dumb-jump dracula-theme django-theme diff-hl deft darktooth-theme darkokai-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme crosshairs company-web company-statistics company-go company-anaconda column-enforce-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode clues-theme clean-aindent-mode cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme benchmark-init badwolf-theme auto-yasnippet auto-highlight-symbol auto-compile apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme all-the-icons alect-themes aggressive-indent afternoon-theme adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -433,23 +425,28 @@
  '(notmuch-hello-sections
    (quote
     (notmuch-hello-insert-inbox notmuch-hello-insert-recent-searches notmuch-hello-insert-search notmuch-hello-insert-recent-searches notmuch-hello-insert-alltags notmuch-hello-insert-footer)))
- '(org-mobile-directory (quote ("/Users/Jason/Dropbox/Notes/Mobile/")))
+ '(org-mobile-directory (quote ("/Users/Jason/Dropbox/Notes/Mobile/")) t)
  '(package-selected-packages
    (quote
-    (origami helm-gtags helm-flycheck flycheck ess-smart-equals ess-R-object-popup
-      ess-R-data-view ess julia-mode defproject autothemer dash ox-gfm imenu-list
-      mu4e-maildirs-extension mu4e-alert sr-speedbar notmuch ggtags helm-cscope
-      xcscope elpy find-file-in-project ivy virtualenvwrapper py-yapf zonokai-theme
-      zenburn-theme zen-and-art-theme yapfify xterm-color ws-butler window-numbering
-      which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme toc-org tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacemacs-theme spaceline powerline spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smeargle slim-mode shell-pop seti-theme scss-mode sass-mode reverse-theme reveal-in-osx-finder restart-emacs ranger rainbow-mode rainbow-identifiers rainbow-delimiters railscasts-theme pyvenv pytest pyenv-mode py-isort purple-haze-theme pug-mode professional-theme popwin planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme perspective persp-mode pcre2el pbcopy pastels-on-dark-theme paradox spinner osx-trash osx-dictionary orgit organic-green-theme org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme neotree naquadah-theme mwim mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme material-theme markdown-toc markdown-mode majapahit-theme magit-gitflow magit-gh-pulls macrostep lush-theme lorem-ipsum live-py-mode linum-relative link-hint light-soap-theme less-css-mode launchctl jedi-core python-environment epc ctable concurrent deferred jbeans-theme jazz-theme ir-black-theme inkpot-theme info+ indent-guide ido-vertical-mode ibuffer-projectile hydra hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt heroku-theme hemisu-theme help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag hc-zenburn-theme haml-mode gruber-darker-theme grandshell-theme gotham-theme google-translate golden-ratio go-guru go-eldoc gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md gandalf-theme flx-ido flx flatui-theme flatland-theme firebelly-theme fill-column-indicator farmhouse-theme fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight espresso-theme eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav ein request websocket editorconfig dumb-jump dracula-theme django-theme diminish diff-hl deft darktooth-theme darkokai-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme crosshairs col-highlight hl-line+ vline company-web web-completion-data company-statistics company-go go-mode company-anaconda company column-enforce-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode clues-theme clean-aindent-mode cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme bind-map bind-key benchmark-init badwolf-theme auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed apropospriate-theme anti-zenburn-theme anaconda-mode pythonic f s ample-zen-theme ample-theme all-the-icons font-lock+ alect-themes aggressive-indent afternoon-theme adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete
-      popup quelpa package-build gruvbox-theme))))
- '(speedbar-default-position (quote left))
- )
+    (smex ycmd request-deferred deferred zonokai-theme zenburn-theme zen-and-art-theme yapfify xterm-color web-mode underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit sunny-day-theme sublime-themes subatomic256-theme subatomic-theme sr-speedbar spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smeargle slim-mode shell-pop seti-theme scss-mode sass-mode reverse-theme reveal-in-osx-finder ranger rainbow-mode rainbow-identifiers railscasts-theme pyvenv pytest pyenv-mode py-isort purple-haze-theme pug-mode professional-theme planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme pbcopy pastels-on-dark-theme ox-gfm osx-trash osx-dictionary orgit organic-green-theme org-projectile org-present org org-pomodoro org-download omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme notmuch noctilux-theme niflheim-theme naquadah-theme mwim mustang-theme multi-term mu4e-maildirs-extension mu4e-alert alert log4e gntp monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme markdown-toc markdown-mode majapahit-theme magit-gitflow magit-gh-pulls lush-theme live-py-mode light-soap-theme less-css-mode launchctl jbeans-theme jazz-theme ir-black-theme inkpot-theme imenu-list ibuffer-projectile hy-mode htmlize heroku-theme hemisu-theme helm-pydoc helm-gtags helm-gitignore helm-flycheck flycheck helm-css-scss hc-zenburn-theme haml-mode gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme go-guru go-eldoc go-mode gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md ggtags gandalf-theme flatui-theme flatland-theme firebelly-theme farmhouse-theme evil-magit magit magit-popup git-commit with-editor ess-smart-equals ess-R-object-popup ess-R-data-view ctable ess julia-mode espresso-theme eshell-z eshell-prompt-extras esh-help emmet-mode editorconfig dracula-theme django-theme diff-hl deft defproject darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme crosshairs col-highlight hl-line+ vline color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme anaconda-mode pythonic ample-zen-theme ample-theme alect-themes afternoon-theme ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox origami org-plus-contrib org-bullets open-junk-file neotree move-text material-theme macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ (custom-set-faces
+  '(company-tooltip-common
+    ((t (:inherit company-tooltip :weight bold :underline nil))))
+  '(company-tooltip-common-selection
+    ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
  )
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -458,4 +455,4 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (zonokai-theme zenburn-theme zen-and-art-theme yapfify xterm-color web-mode underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit sunny-day-theme sublime-themes subatomic256-theme subatomic-theme sr-speedbar spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smeargle slim-mode shell-pop seti-theme scss-mode sass-mode reverse-theme reveal-in-osx-finder ranger rainbow-mode rainbow-identifiers railscasts-theme pyvenv pytest pyenv-mode py-isort purple-haze-theme pug-mode professional-theme planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme pbcopy pastels-on-dark-theme ox-gfm osx-trash osx-dictionary orgit organic-green-theme org-projectile org-present org org-pomodoro org-download omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme notmuch noctilux-theme niflheim-theme naquadah-theme mwim mustang-theme multi-term mu4e-maildirs-extension mu4e-alert alert log4e gntp monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme markdown-toc markdown-mode majapahit-theme magit-gitflow magit-gh-pulls lush-theme live-py-mode light-soap-theme less-css-mode launchctl jbeans-theme jazz-theme ir-black-theme inkpot-theme imenu-list ibuffer-projectile hy-mode htmlize heroku-theme hemisu-theme helm-pydoc helm-gtags helm-gitignore helm-flycheck flycheck helm-css-scss hc-zenburn-theme haml-mode gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme go-guru go-eldoc go-mode gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md ggtags gandalf-theme flatui-theme flatland-theme firebelly-theme farmhouse-theme evil-magit magit magit-popup git-commit with-editor ess-smart-equals ess-R-object-popup ess-R-data-view ctable ess julia-mode espresso-theme eshell-z eshell-prompt-extras esh-help emmet-mode editorconfig dracula-theme django-theme diff-hl deft defproject darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme crosshairs col-highlight hl-line+ vline color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme anaconda-mode pythonic ample-zen-theme ample-theme alect-themes afternoon-theme ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox origami org-plus-contrib org-bullets open-junk-file neotree move-text material-theme macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (ycmd request-deferred deferred zonokai-theme zenburn-theme zen-and-art-theme yapfify xterm-color web-mode underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit sunny-day-theme sublime-themes subatomic256-theme subatomic-theme sr-speedbar spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smeargle slim-mode shell-pop seti-theme scss-mode sass-mode reverse-theme reveal-in-osx-finder ranger rainbow-mode rainbow-identifiers railscasts-theme pyvenv pytest pyenv-mode py-isort purple-haze-theme pug-mode professional-theme planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme pbcopy pastels-on-dark-theme ox-gfm osx-trash osx-dictionary orgit organic-green-theme org-projectile org-present org org-pomodoro org-download omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme notmuch noctilux-theme niflheim-theme naquadah-theme mwim mustang-theme multi-term mu4e-maildirs-extension mu4e-alert alert log4e gntp monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme markdown-toc markdown-mode majapahit-theme magit-gitflow magit-gh-pulls lush-theme live-py-mode light-soap-theme less-css-mode launchctl jbeans-theme jazz-theme ir-black-theme inkpot-theme imenu-list ibuffer-projectile hy-mode htmlize heroku-theme hemisu-theme helm-pydoc helm-gtags helm-gitignore helm-flycheck flycheck helm-css-scss hc-zenburn-theme haml-mode gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme go-guru go-eldoc go-mode gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md ggtags gandalf-theme flatui-theme flatland-theme firebelly-theme farmhouse-theme evil-magit magit magit-popup git-commit with-editor ess-smart-equals ess-R-object-popup ess-R-data-view ctable ess julia-mode espresso-theme eshell-z eshell-prompt-extras esh-help emmet-mode editorconfig dracula-theme django-theme diff-hl deft defproject darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme crosshairs col-highlight hl-line+ vline color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme anaconda-mode pythonic ample-zen-theme ample-theme alect-themes afternoon-theme ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox origami org-plus-contrib org-bullets open-junk-file neotree move-text material-theme macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
