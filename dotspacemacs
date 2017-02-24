@@ -67,8 +67,6 @@ values."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    dotspacemacs-startup-lists '((recents . 5)
                                 (projects . 3)
-                                (todos . 1)
-                                (agenda . 1)
                                 (bookmarks . 2))
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
@@ -251,12 +249,16 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
     (add-hook 'after-init-hook 'global-company-mode)
-    
+
+    (menu-bar-mode)
     ;; Org Mode
     (cond ((eq system-type 'windows-nt)
            (setq org-directory "C:\\"))
           ((eq system-type 'darwin)
-           (setq org-directory "/Users/Jason/Dropbox/Notes/org"))
+           (setq org-directory "/Users/Jason/Dropbox/Notes/org")
+           (setq exec-path-from-shell-debug t)
+           (exec-path-from-shell-copy-env "GOPATH")
+           (exec-path-from-shell-copy-env "GOHOME"))
           ((eq system-type 'gnu/linux)
            (setq org-directory ("/Users/Jason/Dropbox/Notes/org"))))
 
