@@ -277,11 +277,8 @@ you should place your code here."
     (org-babel-do-load-languages
      'org-babel-load-languages
      '((restclient . t)))
-    (setq org-confirm-babel-evaluate t)
 
-    (setq exec-path-from-shell-debug t)
-    (exec-path-from-shell-copy-env "GOPATH")
-    (exec-path-from-shell-copy-env "GOHOME")
+    (setq org-confirm-babel-evaluate t)
 
     (with-eval-after-load 'org-agenda
       (require 'org-projectile)
